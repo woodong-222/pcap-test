@@ -78,7 +78,7 @@ void capture(const u_char* packet)
 	capture_ipv4(packet + ETHERNET_SIZE);
 	capture_tcp(packet + ETHERNET_SIZE + IPV4_SIZE);
 	capture_payload(packet + ETHERNET_SIZE + IPV4_SIZE + TCP_SIZE);
-	printf("----------------------------------------\n");
+	printf("---------------------------------------------------------------------------\n");
 }
 
 int main(int argc, char* argv[]) {
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 			printf("pcap_next_ex return %d(%s)\n", res, pcap_geterr(pcap));
 			break;
 		}
-		if ((*(uint16_t*)(packet + ETHERTYPE) == ntohs(IPV4)) && (*(uint8_t*)(packet+PROTOCOL) == TCP)) capture(packet);
+		if ((*(uint8_t*)(packet+PROTOCOL) == TCP)) capture(packet);
 	}
 
 	pcap_close(pcap);
